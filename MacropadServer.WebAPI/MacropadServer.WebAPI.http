@@ -1,0 +1,6 @@
+@MacropadServer.WebAPI_HostAddress = http://localhost:5294
+
+GET {{MacropadServer.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
