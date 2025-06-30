@@ -10,6 +10,8 @@ public sealed class AppUser : IdentityUser<Guid>
 
     public string SecretToken { get; set; } = default!;
 
+    public IEnumerable<Macropad>? Macropads { get; set; }
+
     public UserRoleEnum Role { get; set; } = UserRoleEnum.User;
 
     public string? RefreshToken { get; set; }

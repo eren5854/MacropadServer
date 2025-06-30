@@ -17,7 +17,7 @@ public sealed class MacropadModel : Entity
     public string? MicrocontrollerType { get; set; }
     public PowerTypeEnum? PowerType { get; set; }
     public bool? Rechargeable { get; set; }
-    public string CaseColor { get; set; } = string.Empty;
+    public string? CaseColor { get; set; }
     public string? CaseMaterial { get; set; }
     public string? CaseDescription { get; set; }
 

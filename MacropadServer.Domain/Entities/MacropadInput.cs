@@ -1,5 +1,6 @@
 ﻿using MacropadServer.Domain.Abstractions;
 using MacropadServer.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace MacropadServer.Domain.Entities;
 public sealed class MacropadInput : Entity
@@ -13,4 +14,9 @@ public sealed class MacropadInput : Entity
     public string? Item2 { get; set; }
     public string? Item3 { get; set; }
     public string? Item4 { get; set; }
+
+    [JsonIgnore]
+    public Guid MacropadId { get; set; }
+    [JsonIgnore]
+    public Macropad Macropad { get; set; } = default!;
 }

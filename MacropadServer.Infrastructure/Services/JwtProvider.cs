@@ -1,4 +1,5 @@
-﻿using MacropadServer.Application.Services;
+﻿using MacropadServer.Application.Auth;
+using MacropadServer.Application.Services;
 using MacropadServer.Domain.Entities;
 using MacropadServer.Infrastructure.Options;
 using Microsoft.AspNetCore.Identity;
