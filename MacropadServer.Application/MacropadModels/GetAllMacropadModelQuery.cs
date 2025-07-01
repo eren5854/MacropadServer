@@ -53,7 +53,10 @@ internal sealed class GetAllMacropadModelQueryHandler(
                 Rechargeable = model.Rechargeable,
                 CaseColor = model.CaseColor,
                 CaseMaterial = model.CaseMaterial,
-                CaseDescription = model.CaseDescription
+                CaseDescription = model.CaseDescription,
+                CreatedAt = model.CreatedAt,
+                UpdatedAt = model.UpdatedAt,
+                IsActived = model.IsActived
             })
             .AsQueryable();
         return Result<IQueryable<GetAllMacropadModelQueryResponse>>.Succeed(macropadModels);

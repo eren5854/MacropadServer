@@ -59,8 +59,9 @@ internal sealed class Generate(
         var randomPart = new string(Enumerable.Range(0, 6).Select(_ => chars[random.Next(chars.Length)]).ToArray());
         var date = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
         var screenCode = macropadModel.IsScreenExist ? "DP" : "ND";
-
-        return $"MCP-{screenCode}-{macropadModel.ButtonCount}-{date}-{randomPart}";
+        string buttonCount = macropadModel.ButtonCount.ToString();
+        if (macropadModel.ButtonCount < 10) buttonCount = "0" + macropadModel.ButtonCount;
+        return $"MCP-{screenCode}-{buttonCount}-{date}-{randomPart}";
 
         //const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         //var random = new Random();
