@@ -24,7 +24,7 @@ internal sealed class SendForgotPasswordEmailCommandHandler(
 
         Random random = new();
         user.ForgotPasswordCode = random.Next(100000, 999999);  // 6 haneli kod oluştur
-        user.ForgotPasswordCodeSendDate = DateTime.UtcNow;
+        user.ForgotPasswordCodeSendDate = DateTimeOffset.UtcNow;
 
         await userManager.UpdateAsync(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

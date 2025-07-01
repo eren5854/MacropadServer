@@ -1,4 +1,5 @@
 ﻿using ED.GenericRepository;
+using MacropadServer.Domain.Abstractions;
 using MacropadServer.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -24,5 +25,42 @@ internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, Identity
 
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         //base.OnModelCreating(builder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker.Entries<Entity>();
+        foreach (var entry in entries)
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
+                    break;
+            }
+
+            //if(entry.State == EntityState.Modified)
+            //{
+            //    if (entry.Property(p => p.IsDeleted).CurrentValue = true)
+            //    {
+            //        entry.Property(p => p.DeleteAt)
+            //            .CurrentValue = DateTimeOffset.UtcNow;
+            //    }
+            //    else
+            //    {
+            //        entry.Property(p => p.UpdatedAt)
+            //            .CurrentValue = DateTimeOffset.UtcNow;
+            //    }
+            //}
+
+            //if(entry.State == EntityState.Deleted)
+            //{
+            //    throw new ArgumentException("Db'den silme işlemi yapamazsınız!");
+            //}
+        }
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

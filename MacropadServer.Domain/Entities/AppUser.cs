@@ -15,15 +15,15 @@ public sealed class AppUser : IdentityUser<Guid>
     public UserRoleEnum Role { get; set; } = UserRoleEnum.User;
 
     public string? RefreshToken { get; set; }
-    public DateTime? RefreshTokenExpires { get; set; }
+    public DateTimeOffset? RefreshTokenExpires { get; set; }
 
     public int? ForgotPasswordCode { get; set; }
-    public DateTime? ForgotPasswordCodeSendDate { get; set; }
+    public DateTimeOffset? ForgotPasswordCodeSendDate { get; set; }
 
     public int? EmailConfirmCode { get; set; }
 
     public bool IsDeleted { get; set; } = false;
     public bool IsActive { get; set; } = true;
-    public DateTime CreatedDate { get; set; }
-    public DateTime? UpdatedDate { get; set; }
+    public DateTimeOffset CreatedDate { get; set; }
+    public DateTimeOffset? UpdatedDate { get; set; }
 }

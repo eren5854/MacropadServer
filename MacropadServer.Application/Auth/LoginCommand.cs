@@ -18,7 +18,7 @@ public sealed record LoginCommandResponse(string Token,
 internal sealed class LoginCommandHandler(
     UserManager<AppUser> userManager,
     SignInManager<AppUser> signInManager,
-    IUnitOfWork unitOfWork,
+    //IUnitOfWork unitOfWork,
     IJwtProvider jwtProvider) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ internal sealed class LoginCommandHandler(
         SignInResult signInResult = await signInManager.CheckPasswordSignInAsync(appUser, request.Password, true);
         if (signInResult.IsLockedOut)
         {
-            TimeSpan? timeSpan = appUser.LockoutEnd - DateTime.UtcNow;
+            TimeSpan? timeSpan = appUser.LockoutEnd - DateTimeOffset.UtcNow;
             if (timeSpan is not null)
             {
                 return Result<LoginCommandResponse>.Failure($"Password entered incorrectly 3 times! Wait {Math.Ceiling(timeSpan.Value.TotalSeconds)} seconds.");

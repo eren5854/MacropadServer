@@ -4,7 +4,7 @@ using MacropadServer.Domain.Entities;
 using MacropadServer.Domain.Repositories;
 using MediatR;
 
-namespace MacropadServer.Application.Macropads;
+namespace MacropadServer.Application.MacropadDevices;
 public sealed record GetAllMacropadDeviceQuery() : IRequest<Result<IQueryable<GetAllMacropadDeviceQueryResponse>>>;
 
 public sealed class GetAllMacropadDeviceQueryResponse : EntityDto
@@ -29,7 +29,7 @@ internal sealed class GetAllMacropadDeviceQueryHandler(
                 MacropadName = macropad.MacropadName,
                 MacropadSecretToken = macropad.MacropadSecretToken,
                 IsEyeAnimationEnabled = macropad.IsEyeAnimationEnabled,
-                //MacropadInputs = macropad.MacropadInputs,
+                MacropadInputs = macropad.MacropadInputs,
                 //MacropadEyeAnimations = macropad.MacropadEyeAnimations
             })
             .AsQueryable();

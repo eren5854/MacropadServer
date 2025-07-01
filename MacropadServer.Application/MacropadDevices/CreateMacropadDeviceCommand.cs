@@ -7,7 +7,7 @@ using MacropadServer.Domain.Repositories;
 using Mapster;
 using MediatR;
 
-namespace MacropadServer.Application.Macropads;
+namespace MacropadServer.Application.MacropadDevices;
 public sealed record CreateMacropadDeviceCommand(
     string MacropadName,
     bool? IsEyeAnimationEnabled,
@@ -45,12 +45,9 @@ public sealed class CreateMacropadDeviceCommandValidator : AbstractValidator<Cre
         RuleFor(r => r.MacropadName)
             .NotEmpty().WithMessage("Macropad adı boş olamaz.")
             .MaximumLength(100).WithMessage("Macropad adı en fazla 100 karakter olabilir.");
-
         RuleFor(r => r.MacropadModelId)
             .NotEmpty().WithMessage("Macropad modeli boş olamaz.");
-
         RuleFor(r => r.AppUserId)
             .NotEmpty().WithMessage("Kullanıcı boş olamaz.");
-
     }
 }

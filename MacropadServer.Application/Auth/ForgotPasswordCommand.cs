@@ -19,7 +19,7 @@ internal sealed class ForgotPasswordCommandHandler(
             return Result<string>.Failure("Kullanıcı bulunamadı");
         }
 
-        DateTime currentDateTime = DateTime.Now;
+        DateTimeOffset currentDateTime = DateTimeOffset.Now;
         if (user.ForgotPasswordCodeSendDate.HasValue && (currentDateTime - user.ForgotPasswordCodeSendDate.Value).TotalHours > 6)
         {
             return Result<string>.Failure("Kodun süresi geçmiş lütfen tekrar deneyiniz");

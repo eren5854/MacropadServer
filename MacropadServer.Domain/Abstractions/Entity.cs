@@ -4,7 +4,7 @@ public abstract class Entity : EntityAbstraction
     protected Entity()
     {
         Id = Guid.NewGuid();
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
         IsDeleted = false;
         IsActived = true;
     }
