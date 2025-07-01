@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MacropadServer.Infrastructure.Configurations;
-public sealed class MacropadConfiguration : IEntityTypeConfiguration<Macropad>
+public sealed class MacropadDeviceConfiguration : IEntityTypeConfiguration<MacropadDevice>
 {
-    public void Configure(EntityTypeBuilder<Macropad> builder)
+    public void Configure(EntityTypeBuilder<MacropadDevice> builder)
     {
-        builder.ToTable("Macropads");
+        builder.ToTable("MacropadDevices");
 
         builder.Property(p => p.MacropadName)
             .IsRequired()

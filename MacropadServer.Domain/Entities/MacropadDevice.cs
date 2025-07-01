@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace MacropadServer.Domain.Entities;
-public sealed class Macropad : Entity
+public sealed class MacropadDevice : Entity
 {
     public string MacropadName { get; set; } = string.Empty;
     public string MacropadSecretToken { get; set; } = string.Empty;

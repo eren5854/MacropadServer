@@ -8,20 +8,20 @@ using Mapster;
 using MediatR;
 
 namespace MacropadServer.Application.Macropads;
-public sealed record CreateMacropadCommand(
+public sealed record CreateMacropadDeviceCommand(
     string MacropadName,
     bool? IsEyeAnimationEnabled,
     Guid MacropadModelId,
     Guid AppUserId) : IRequest<Result<string>>;
 
-internal sealed class CreateMacropadCommandHandler(
-    IMacropadRepository macropadRepository,
+internal sealed class CreateMacropadDeviceCommandHandler(
+    IMacropadDeviceRepository macropadRepository,
     IMacropadModelRepository macropadModelRepository,
     IAppUserRepository appUserRepository,
     IUnitOfWork unitOfWork,
-    IGenerate generate) : IRequestHandler<CreateMacropadCommand, Result<string>>
+    IGenerate generate) : IRequestHandler<CreateMacropadDeviceCommand, Result<string>>
 {
-    public async Task<Result<string>> Handle(CreateMacropadCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateMacropadDeviceCommand request, CancellationToken cancellationToken)
     {
         bool IsMacropadModelExist = await macropadModelRepository.AnyAsync(
             x => x.Id == request.MacropadModelId, cancellationToken);
@@ -29,7 +29,7 @@ internal sealed class CreateMacropadCommandHandler(
         bool IsAppUserExist = await appUserRepository.AnyAsync(
             x => x.Id == request.AppUserId, cancellationToken);
         if (!IsAppUserExist) return Result<string>.Failure("Kullanıcı bulunamadı");
-        Macropad macropad = request.Adapt<Macropad>();
+        MacropadDevice macropad = request.Adapt<MacropadDevice>();
         macropad.MacropadSecretToken = await generate.GenerateSecretToken();
         macropadRepository.Add(macropad);
         generate.GenerateMacropadInput(macropad);
@@ -38,9 +38,9 @@ internal sealed class CreateMacropadCommandHandler(
     }
 }
 
-public sealed class CreateMacropadCommandValidator : AbstractValidator<CreateMacropadCommand>
+public sealed class CreateMacropadDeviceCommandValidator : AbstractValidator<CreateMacropadDeviceCommand>
 {
-    public CreateMacropadCommandValidator()
+    public CreateMacropadDeviceCommandValidator()
     {
         RuleFor(r => r.MacropadName)
             .NotEmpty().WithMessage("Macropad adı boş olamaz.")

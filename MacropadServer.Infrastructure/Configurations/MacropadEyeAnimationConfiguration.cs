@@ -20,9 +20,9 @@ public sealed class MacropadEyeAnimationConfiguration : IEntityTypeConfiguration
                 p => p.Value,
                 v => EyeAnimationTriggerEnum.FromValue(v));
 
-        builder.HasOne(p => p.Macropad)
+        builder.HasOne(p => p.MacropadDevice)
             .WithMany(p => p.MacropadEyeAnimations)
-            .HasForeignKey(p => p.MacropadId)
+            .HasForeignKey(p => p.MacropadDeviceId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasQueryFilter(filter => !filter.IsDeleted);

@@ -16,7 +16,7 @@ public sealed class MacropadInput : Entity
     public string? Item4 { get; set; }
 
     [JsonIgnore]
-    public Guid MacropadId { get; set; }
+    public Guid MacropadDeviceId { get; set; }
     [JsonIgnore]
-    public Macropad Macropad { get; set; } = default!;
+    public MacropadDevice MacropadDevice { get; set; } = default!;
 }

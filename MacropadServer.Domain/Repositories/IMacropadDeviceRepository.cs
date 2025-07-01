@@ -2,6 +2,6 @@
 using MacropadServer.Domain.Entities;
 
 namespace MacropadServer.Domain.Repositories;
-public interface IMacropadRepository : IRepository<Macropad>
+public interface IMacropadDeviceRepository : IRepository<MacropadDevice>
 {
 }

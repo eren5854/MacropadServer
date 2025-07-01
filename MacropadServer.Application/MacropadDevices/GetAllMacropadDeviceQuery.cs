@@ -5,9 +5,9 @@ using MacropadServer.Domain.Repositories;
 using MediatR;
 
 namespace MacropadServer.Application.Macropads;
-public sealed record GetAllMacropadQuery() : IRequest<Result<IQueryable<GetAllMacropadQueryResponse>>>;
+public sealed record GetAllMacropadDeviceQuery() : IRequest<Result<IQueryable<GetAllMacropadDeviceQueryResponse>>>;
 
-public sealed class GetAllMacropadQueryResponse : EntityDto
+public sealed class GetAllMacropadDeviceQueryResponse : EntityDto
 {
     public string MacropadName { get; set; } = string.Empty;
     public string MacropadSecretToken { get; set; } = string.Empty;
@@ -17,22 +17,22 @@ public sealed class GetAllMacropadQueryResponse : EntityDto
     public IEnumerable<MacropadEyeAnimation>? MacropadEyeAnimations { get; set; }
 }
 
-internal sealed class GetAllMacropadQueryHandler(
-    IMacropadRepository macropadRepository) : IRequestHandler<GetAllMacropadQuery, Result<IQueryable<GetAllMacropadQueryResponse>>>
+internal sealed class GetAllMacropadDeviceQueryHandler(
+    IMacropadDeviceRepository macropadRepository) : IRequestHandler<GetAllMacropadDeviceQuery, Result<IQueryable<GetAllMacropadDeviceQueryResponse>>>
 {
-    public async Task<Result<IQueryable<GetAllMacropadQueryResponse>>> Handle(GetAllMacropadQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IQueryable<GetAllMacropadDeviceQueryResponse>>> Handle(GetAllMacropadDeviceQuery request, CancellationToken cancellationToken)
     {
         var macropads = macropadRepository.GetAll()
-            .Select(macropad => new GetAllMacropadQueryResponse
+            .Select(macropad => new GetAllMacropadDeviceQueryResponse
             {
                 Id = macropad.Id,
                 MacropadName = macropad.MacropadName,
                 MacropadSecretToken = macropad.MacropadSecretToken,
                 IsEyeAnimationEnabled = macropad.IsEyeAnimationEnabled,
-                MacropadInputs = macropad.MacropadInputs,
-                MacropadEyeAnimations = macropad.MacropadEyeAnimations
+                //MacropadInputs = macropad.MacropadInputs,
+                //MacropadEyeAnimations = macropad.MacropadEyeAnimations
             })
             .AsQueryable();
-        return Result<IQueryable<GetAllMacropadQueryResponse>>.Succeed(macropads);
+        return Result<IQueryable<GetAllMacropadDeviceQueryResponse>>.Succeed(macropads);
     }
 }

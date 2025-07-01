@@ -9,7 +9,7 @@ public sealed class MacropadEyeAnimation : Entity
     public EyeAnimationTriggerEnum EyeAnimationTrigger { get; set; } = EyeAnimationTriggerEnum.None;
 
     [JsonIgnore]
-    public Guid MacropadId { get; set; }
+    public Guid MacropadDeviceId { get; set; }
     [JsonIgnore]
-    public Macropad Macropad { get; set; } = default!;
+    public MacropadDevice MacropadDevice { get; set; } = default!;
 }

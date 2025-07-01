@@ -45,9 +45,9 @@ public sealed class MacropadInputConfiguration : IEntityTypeConfiguration<Macrop
             .HasMaxLength(500)
             .IsRequired(false);
 
-        builder.HasOne(p => p.Macropad)
+        builder.HasOne(p => p.MacropadDevice)
             .WithMany(p => p.MacropadInputs)
-            .HasForeignKey(p => p.MacropadId)
+            .HasForeignKey(p => p.MacropadDeviceId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 

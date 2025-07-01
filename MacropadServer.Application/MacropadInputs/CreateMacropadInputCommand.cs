@@ -19,25 +19,25 @@ public sealed record CreateMacropadInputCommand(
     string? Item2,
     string? Item3,
     string? Item4,
-    Guid MacropadId) : IRequest<Result<string>>;
+    Guid MacropadDeviceId) : IRequest<Result<string>>;
 
 internal sealed class CreateMacropadInputCommandHandler(
     IMacropadInputRepository macropadInputRepository,
-    IMacropadRepository macropadRepository,
+    IMacropadDeviceRepository macropadDeviceRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<CreateMacropadInputCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(CreateMacropadInputCommand request, CancellationToken cancellationToken)
     {
-        Macropad? macropad = macropadRepository.Where(w => w.Id == request.MacropadId)
+        MacropadDevice? macropadDevice = macropadDeviceRepository.Where(w => w.Id == request.MacropadDeviceId)
             .Include(i => i.MacropadInputs)
             .Include(i => i.MacropadModel)
             .FirstOrDefault();
-        if (macropad is null) return Result<string>.Failure("Macropad bulunamadı");
-        if (macropad.MacropadInputs!.Count() >= macropad.MacropadModel!.ButtonCount * macropad.MacropadModel.ModCount)
+        if (macropadDevice is null) return Result<string>.Failure("Macropad bulunamadı");
+        if (macropadDevice.MacropadInputs!.Count() >= macropadDevice.MacropadModel!.ButtonCount * macropadDevice.MacropadModel.ModCount)
             return Result<string>.Failure("Macropad giriş sayısı sınırına ulaşıldı");
-        if (macropad.MacropadInputs!.Count(x => x.ModIndex == request.ModIndex) >= macropad.MacropadModel!.ButtonCount)
+        if (macropadDevice.MacropadInputs!.Count(x => x.ModIndex == request.ModIndex) >= macropadDevice.MacropadModel!.ButtonCount)
             return Result<string>.Failure("Bu mod için izin verilen maksimum giriş sayısına ulaşıldı");
-        if (macropad.MacropadInputs!.Any(x => x.InputIndex == request.InputIndex))
+        if (macropadDevice.MacropadInputs!.Any(x => x.InputIndex == request.InputIndex))
             return Result<string>.Failure("Bu giriş indeksi zaten kullanılıyor");
         MacropadInput macropadInput = request.Adapt<MacropadInput>();
         macropadInputRepository.Add(macropadInput);
@@ -59,7 +59,7 @@ public sealed class CreateMacropadInputCommandValidator : AbstractValidator<Crea
             .NotEmpty().WithMessage("Mod indeksi boş olamaz.");
         RuleFor(r => r.InputType)
             .IsInEnum().WithMessage("Geçersiz giriş tipi.");
-        RuleFor(r => r.MacropadId)
+        RuleFor(r => r.MacropadDeviceId)
             .NotEmpty().WithMessage("Macropad ID boş olamaz.");
         RuleFor(r => r.Item1)
             .MaximumLength(500).WithMessage("Item1 en fazla 500 karakter olabilir.");
