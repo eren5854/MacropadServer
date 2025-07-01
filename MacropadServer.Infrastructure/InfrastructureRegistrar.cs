@@ -8,15 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MacropadServer.Infrastructure;
-public static class DependencyInjection
+public static class InfrastructureRegistrar
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
@@ -47,8 +41,6 @@ public static class DependencyInjection
             options.Lockout.AllowedForNewUsers = true;
         }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-        //services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
-
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
         services.ConfigureOptions<JwtTokenOptionsSetupConfiguration>();
         services.AddAuthentication()
@@ -59,16 +51,14 @@ public static class DependencyInjection
 
         //services.AddChatClient(new OllamaChatClient(new Uri("http://192.168.68.154:14001"), "llama3.2:1b"));
 
-        services.Scan(action =>
-        {
-            action
-            .FromAssemblies(Assembly.GetExecutingAssembly())
+        services.Scan(action => action
+            .FromAssemblies(typeof(InfrastructureRegistrar).Assembly)
             .AddClasses(publicOnly: false)
             .UsingRegistrationStrategy(RegistrationStrategy.Skip)
             .AsMatchingInterface()
             .AsImplementedInterfaces()
-            .WithScopedLifetime();
-        });
+            .WithScopedLifetime());
+
         return services;
     }
 }

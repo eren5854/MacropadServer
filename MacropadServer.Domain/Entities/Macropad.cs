@@ -5,9 +5,7 @@ namespace MacropadServer.Domain.Entities;
 public sealed class Macropad : Entity
 {
     public string MacropadName { get; set; } = string.Empty;
-    //public string MacropadSerialNo { get; set; } = string.Empty;
     public string MacropadSecretToken { get; set; } = string.Empty;
-
     public bool? IsEyeAnimationEnabled { get; set; }
 
     [JsonIgnore]

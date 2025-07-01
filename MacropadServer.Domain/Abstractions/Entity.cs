@@ -1,5 +1,5 @@
 ﻿namespace MacropadServer.Domain.Abstractions;
-public abstract class Entity
+public abstract class Entity : EntityAbstraction
 {
     protected Entity()
     {
@@ -8,10 +8,5 @@ public abstract class Entity
         IsDeleted = false;
         IsActived = true;
     }
-    public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
     public bool IsDeleted { get; set; }
-    public bool IsActived { get; set; }
-
 }

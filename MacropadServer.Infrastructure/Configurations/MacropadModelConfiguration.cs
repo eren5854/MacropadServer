@@ -31,10 +31,13 @@ public sealed class MacropadModelConfiguration : IEntityTypeConfiguration<Macrop
             .IsRequired(false);
 
         builder.Property(p => p.ButtonCount)
-            .IsRequired(false);
+            .IsRequired();
+
+        builder.Property(p => p.ModCount)
+            .IsRequired();
 
         builder.Property(p => p.IsScreenExist)
-            .IsRequired(false);
+            .IsRequired();
 
         builder.Property(p => p.ScreenType)
             .HasMaxLength(50)
