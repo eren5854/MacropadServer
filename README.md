@@ -48,10 +48,3 @@ Cihazın işlevselliğini yönetmek, yapılandırmaları kontrol etmek ve kullan
 - Kullanılan tüm yapılar ve kütüphaneler **SOLID prensiplerine** uygun olarak entegre edilmiştir.
 
 ---
-
-## 🧑‍💻 Katkıda Bulunmak
-
-Katkıda bulunmak isterseniz PR (Pull Request) gönderebilir ya da Issue oluşturabilirsiniz.  
-Her türlü katkıya açığız!
-
----
