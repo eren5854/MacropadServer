@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Domain", "MacropadServer.Domain\MacropadServer.Domain.csproj", "{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Infrastructure", "MacropadServer.Infrastructure\MacropadServer.Infrastructure.csproj", "{0BC65284-E384-484D-9EE6-8A491782A483}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7AAD6105-AAC2-43F7-BD1B-C618CC093416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Application", "MacropadServer.Application\MacropadServer.Application.csproj", "{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.WebAPI", "src\MacropadServer.WebAPI\MacropadServer.WebAPI.csproj", "{73E23861-443B-4254-B83E-10FF978D7C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.WebAPI", "MacropadServer.WebAPI\MacropadServer.WebAPI.csproj", "{8E305A27-54B7-4F36-899B-E4AA97C3C611}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.ServiceDefaults", "src\MacropadServer.ServiceDefaults\MacropadServer.ServiceDefaults.csproj", "{36AFF4C2-F967-4965-9164-144A4FD2F96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.AppHost", "MacropadServer.AppHost\MacropadServer.AppHost.csproj", "{427A132A-CD51-473B-A150-E18706B3E4F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Infrastructure", "src\MacropadServer.Infrastructure\MacropadServer.Infrastructure.csproj", "{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.ServiceDefaults", "MacropadServer.ServiceDefaults\MacropadServer.ServiceDefaults.csproj", "{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Domain", "src\MacropadServer.Domain\MacropadServer.Domain.csproj", "{4267FDEC-169E-457D-B726-34E947D09546}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Application", "src\MacropadServer.Application\MacropadServer.Application.csproj", "{43D42B45-8B71-481E-85A1-4E7323C38C00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.AppHost", "src\MacropadServer.AppHost\MacropadServer.AppHost.csproj", "{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,32 +25,40 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BC65284-E384-484D-9EE6-8A491782A483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BC65284-E384-484D-9EE6-8A491782A483}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BC65284-E384-484D-9EE6-8A491782A483}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BC65284-E384-484D-9EE6-8A491782A483}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Release|Any CPU.Build.0 = Release|Any CPU
-		{427A132A-CD51-473B-A150-E18706B3E4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{427A132A-CD51-473B-A150-E18706B3E4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{427A132A-CD51-473B-A150-E18706B3E4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{427A132A-CD51-473B-A150-E18706B3E4F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73E23861-443B-4254-B83E-10FF978D7C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73E23861-443B-4254-B83E-10FF978D7C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73E23861-443B-4254-B83E-10FF978D7C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73E23861-443B-4254-B83E-10FF978D7C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36AFF4C2-F967-4965-9164-144A4FD2F96A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AFF4C2-F967-4965-9164-144A4FD2F96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AFF4C2-F967-4965-9164-144A4FD2F96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AFF4C2-F967-4965-9164-144A4FD2F96A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4267FDEC-169E-457D-B726-34E947D09546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4267FDEC-169E-457D-B726-34E947D09546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4267FDEC-169E-457D-B726-34E947D09546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4267FDEC-169E-457D-B726-34E947D09546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D42B45-8B71-481E-85A1-4E7323C38C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D42B45-8B71-481E-85A1-4E7323C38C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D42B45-8B71-481E-85A1-4E7323C38C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D42B45-8B71-481E-85A1-4E7323C38C00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73E23861-443B-4254-B83E-10FF978D7C22} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
+		{36AFF4C2-F967-4965-9164-144A4FD2F96A} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
+		{CE4C5ED5-ACB9-4AD9-9CCC-EFDDFBE2C556} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
+		{4267FDEC-169E-457D-B726-34E947D09546} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
+		{43D42B45-8B71-481E-85A1-4E7323C38C00} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
+		{2FD8A4B6-C07F-46E0-8015-A4C87C06B9DD} = {D69A3F7B-8D8B-4C90-9D8D-A376791AD1A0}
 	EndGlobalSection
 EndGlobal
