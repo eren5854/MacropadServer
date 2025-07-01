@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.WebAPI", "MacropadServer.WebAPI\MacropadServer.WebAPI.csproj", "{FD955B56-4DB8-423D-BAF6-D7DEA7C3C3E5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Domain", "MacropadServer.Domain\MacropadServer.Domain.csproj", "{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Infrastructure", "MacropadServer.Infrastructure\MacropadServer.Infrastructure.csproj", "{0BC65284-E384-484D-9EE6-8A491782A483}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.Application", "MacropadServer.Application\MacropadServer.Application.csproj", "{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.WebAPI", "MacropadServer.WebAPI\MacropadServer.WebAPI.csproj", "{8E305A27-54B7-4F36-899B-E4AA97C3C611}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.AppHost", "MacropadServer.AppHost\MacropadServer.AppHost.csproj", "{427A132A-CD51-473B-A150-E18706B3E4F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacropadServer.ServiceDefaults", "MacropadServer.ServiceDefaults\MacropadServer.ServiceDefaults.csproj", "{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FD955B56-4DB8-423D-BAF6-D7DEA7C3C3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD955B56-4DB8-423D-BAF6-D7DEA7C3C3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD955B56-4DB8-423D-BAF6-D7DEA7C3C3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD955B56-4DB8-423D-BAF6-D7DEA7C3C3E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F49C624-1B34-4BDF-B75E-9CEE879E4EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +33,18 @@ Global
 		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB47F4D0-CD08-4009-8FE0-EB2EF94D3082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E305A27-54B7-4F36-899B-E4AA97C3C611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{427A132A-CD51-473B-A150-E18706B3E4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{427A132A-CD51-473B-A150-E18706B3E4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427A132A-CD51-473B-A150-E18706B3E4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{427A132A-CD51-473B-A150-E18706B3E4F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ACF10D4-DE41-4F38-8F59-54C3CA7661ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

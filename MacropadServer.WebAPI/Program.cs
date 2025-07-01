@@ -1,19 +1,43 @@
+using MacropadServer.Application;
+using MacropadServer.Infrastructure;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddCors();
+
+builder.AddServiceDefaults();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
+{
+    cfg.QueueLimit = 100;
+    cfg.Window = TimeSpan.FromSeconds(1);
+    cfg.PermitLimit = 100;
+    cfg.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+}));
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.MapDefaultEndpoints();
+
+//app.MapGet("/", () => "Hello World!");
+
+app.MapOpenApi();
+app.MapDefaultEndpoints();
+
+app.UseCors(cors =>
 {
-    app.MapOpenApi();
-}
+    cors
+        .AllowCredentials()
+        .SetIsOriginAllowed(origin => true)
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+});
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.MapControllers().RequireRateLimiting("fixed");
 
 app.Run();
