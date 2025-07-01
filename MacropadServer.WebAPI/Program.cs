@@ -1,6 +1,7 @@
 using MacropadServer.Application;
 using MacropadServer.Infrastructure;
 using MacropadServer.WebAPI.Controller;
+using MacropadServer.WebAPI.Middlewares;
 using MacropadServer.WebAPI.Modules;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
@@ -31,6 +32,7 @@ builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
 }));
 
 var app = builder.Build();
+ExtensionMiddleware.CreateFirstUser(app);
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapDefaultEndpoints();
