@@ -1,5 +1,6 @@
 using MacropadServer.Application;
 using MacropadServer.Infrastructure;
+using MacropadServer.WebAPI;
 using MacropadServer.WebAPI.Controller;
 using MacropadServer.WebAPI.Middlewares;
 using MacropadServer.WebAPI.Modules;
@@ -30,7 +31,7 @@ builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
     cfg.PermitLimit = 100;
     cfg.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
 }));
-
+builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 var app = builder.Build();
 ExtensionMiddleware.CreateFirstUser(app);
 app.MapOpenApi();
@@ -45,5 +46,6 @@ app.UseCors(cors =>
         .AllowAnyHeader();
 });
 app.RegisterRoutes();
+app.UseExceptionHandler();
 app.MapControllers().RequireRateLimiting("fixed");
 app.Run();
