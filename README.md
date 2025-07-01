@@ -7,8 +7,8 @@ Cihazın işlevselliğini yönetmek, yapılandırmaları kontrol etmek ve kullan
 
 ## 🚀 Proje Bağlantıları
 
-- 🎛️ **Client Uygulaması**: [Client Linki](asdasdasd)
-- 🔌 **Arduino Kodları**: [Arduino Linki](asdasdasdasd)
+- 🎛️ **Client Uygulaması**: [Client Linki]()
+- 🔌 **Arduino Kodları**: [Arduino Linki]()
 
 ---
 
