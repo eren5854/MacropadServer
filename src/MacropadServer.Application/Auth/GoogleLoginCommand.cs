@@ -55,7 +55,7 @@ internal sealed class GoogleLoginCommandHandler(
                     LastName = request.LastName,
                     //ProfilePicture = request.PhotoUrl,
                     EmailConfirmed = true,
-                    CreatedDate = DateTimeOffset.UtcNow,
+                    CreatedAt = DateTimeOffset.UtcNow,
                 };
                 var identityResult = await userManager.CreateAsync(appUser);
                 result = identityResult.Succeeded;

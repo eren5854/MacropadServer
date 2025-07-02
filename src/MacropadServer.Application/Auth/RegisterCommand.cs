@@ -25,7 +25,7 @@ internal sealed class RegisterCommandHandler(
         if (isEmailExists) return Result<string>.Failure("Email already exists");
         AppUser user = request.Adapt<AppUser>();
         user.SecretToken = await generate.GenerateSecretToken();
-        user.CreatedDate = DateTimeOffset.UtcNow;
+        user.CreatedAt = DateTimeOffset.UtcNow;
         user.EmailConfirmed = true;
         IdentityResult result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded) return Result<string>.Failure(result.Errors.FirstOrDefault()?.Description ?? "Unknown error");

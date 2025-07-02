@@ -2,6 +2,7 @@
 using MacropadServer.Application.MacropadDevices;
 using MacropadServer.Application.MacropadModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -12,6 +13,7 @@ namespace MacropadServer.WebAPI.Controller;
 [Route("odata")]
 [ApiController]
 [EnableQuery]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 public class MacropadODataController(
     ISender sender) : ODataController
 {

@@ -3,8 +3,9 @@ public abstract class Entity : EntityAbstraction
 {
     protected Entity()
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();//Normal guid den farklı olarak sıralanabilir bir yapıs unuyor. Fakat ağırlığı artıyor.
         CreatedAt = DateTimeOffset.UtcNow;
+        CreatedBy = "Admin";
         IsDeleted = false;
         IsActived = true;
     }

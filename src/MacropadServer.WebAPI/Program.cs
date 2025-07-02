@@ -34,6 +34,7 @@ builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 var app = builder.Build();
 ExtensionMiddleware.CreateFirstUser(app);
+ExtensionMiddleware.CreateAdmin(app);
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapDefaultEndpoints();
@@ -46,6 +47,8 @@ app.UseCors(cors =>
         .AllowAnyHeader();
 });
 app.RegisterRoutes();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseExceptionHandler();
 app.MapControllers().RequireRateLimiting("fixed");
 app.Run();

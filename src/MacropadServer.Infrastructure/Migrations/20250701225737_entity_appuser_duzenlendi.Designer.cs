@@ -3,6 +3,7 @@ using System;
 using MacropadServer.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MacropadServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250701225737_entity_appuser_duzenlendi")]
+    partial class entity_appuser_duzenlendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,14 +40,14 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeleteBy")
+                    b.Property<string>("DeleteByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -123,7 +126,7 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("UserName")
@@ -151,14 +154,14 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeleteBy")
+                    b.Property<string>("DeleteByUserId")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActived")
@@ -186,7 +189,7 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedByUserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -207,14 +210,14 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeleteBy")
+                    b.Property<string>("DeleteByUserId")
                         .HasColumnType("text");
 
                     b.Property<int>("EyeAnimationTrigger")
@@ -235,7 +238,7 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedByUserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -254,14 +257,14 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeleteBy")
+                    b.Property<string>("DeleteByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("InputBitMap")
@@ -309,7 +312,7 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedByUserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -346,14 +349,14 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeleteAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeleteBy")
+                    b.Property<string>("DeleteByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("DeviceSupport")
@@ -410,7 +413,7 @@ namespace MacropadServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedByUserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

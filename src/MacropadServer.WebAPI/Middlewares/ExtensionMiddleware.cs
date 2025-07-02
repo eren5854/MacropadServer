@@ -23,10 +23,36 @@ public static class ExtensionMiddleware
                     EmailConfirmed = true,
                     SecretToken = Guid.NewGuid().ToString(),
                     Role = UserRoleEnum.User,
-                    CreatedDate = DateTime.UtcNow,
+                    CreatedAt = DateTimeOffset.UtcNow,
                 };
 
                 userManager.CreateAsync(user, "1").Wait();
+            }
+        }
+    }
+
+    public static void CreateAdmin(WebApplication app)
+    {
+        using (var scoped = app.Services.CreateScope())
+        {
+            var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+            if (!userManager.Users.Any(p => p.Email == "info@erendelibas.com"))
+            {
+                AppUser user = new()
+                {
+                    UserName = "admin",
+                    Email = "info@erendelibas.com",
+                    FirstName = "Eren",
+                    LastName = "Delibaş",
+                    EmailConfirmed = true,
+                    SecretToken = Guid.NewGuid().ToString(),
+                    Role = UserRoleEnum.Admin,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    CreatedBy = "admin"
+                };
+
+                userManager.CreateAsync(user, "Password123*").Wait();
             }
         }
     }

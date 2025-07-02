@@ -38,6 +38,8 @@ internal sealed class CreateMacropadModelCommandHandler(
         bool isModelNameExists = macropadModelRepository.Any(a => a.ModelName == request.ModelName);
         if (isModelNameExists) return Result<string>.Failure("Model ismi zaten mevcut");
         MacropadModel macropadModel = request.Adapt<MacropadModel>();
+        macropadModel.CreatedAt = DateTimeOffset.UtcNow;
+        macropadModel.CreatedBy = "Admin";
         macropadModel.ModelSerialNo = await generate.GenerateSerialNumber(macropadModel);
         macropadModelRepository.Add(macropadModel);
         await unitOfWork.SaveChangesAsync(cancellationToken);

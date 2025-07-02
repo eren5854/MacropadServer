@@ -8,7 +8,7 @@ public static class MacropadModelModule
 {
     public static void RegisterMacropadModelRoutes(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder group = app.MapGroup("macropad-models").WithTags("Macropad Models");
+        RouteGroupBuilder group = app.MapGroup("macropad-models").WithTags("Macropad Models").RequireAuthorization();
 
         group.MapPost("create",
             async (ISender sender, CreateMacropadModelCommand request, CancellationToken cancellationToken) =>
