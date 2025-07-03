@@ -12,26 +12,31 @@ public sealed class GetAllMacropadDeviceQueryResponse : EntityDto
     public string MacropadName { get; set; } = string.Empty;
     public string MacropadSecretToken { get; set; } = string.Empty;
     public bool? IsEyeAnimationEnabled { get; set; }
-
-    public IEnumerable<MacropadInput>? MacropadInputs { get; set; }
-    public IEnumerable<MacropadEyeAnimation>? MacropadEyeAnimations { get; set; }
 }
 
 internal sealed class GetAllMacropadDeviceQueryHandler(
-    IMacropadDeviceRepository macropadRepository) : IRequestHandler<GetAllMacropadDeviceQuery, Result<IEnumerable<GetAllMacropadDeviceQueryResponse>>>
+    IMacropadDeviceRepository macropadDeviceRepository) : IRequestHandler<GetAllMacropadDeviceQuery, Result<IEnumerable<GetAllMacropadDeviceQueryResponse>>>
 {
     public async Task<Result<IEnumerable<GetAllMacropadDeviceQueryResponse>>> Handle(GetAllMacropadDeviceQuery request, CancellationToken cancellationToken)
     {
-        var macropads = macropadRepository.GetAll()
-            .Select(macropad => new GetAllMacropadDeviceQueryResponse
-            {
-                Id = macropad.Id,
-                MacropadName = macropad.MacropadName,
-                MacropadSecretToken = macropad.MacropadSecretToken,
-                IsEyeAnimationEnabled = macropad.IsEyeAnimationEnabled,
-                MacropadInputs = macropad.MacropadInputs,
-                //MacropadEyeAnimations = macropad.MacropadEyeAnimations
-            }).ToList();
+        var macropads = macropadDeviceRepository
+                                .GetAll()
+                                .OrderByDescending(m => m.CreatedAt)
+                                .Select(s => new GetAllMacropadDeviceQueryResponse
+                                {
+                                    Id = s.Id,
+                                    MacropadName = s.MacropadName,
+                                    MacropadSecretToken = s.MacropadSecretToken,
+                                    IsEyeAnimationEnabled = s.IsEyeAnimationEnabled,
+                                    CreatedAt = s.CreatedAt,
+                                    CreatedBy = s.CreatedBy,
+                                    UpdatedAt = s.UpdatedAt,
+                                    UpdatedBy = s.UpdatedBy,
+                                    DeleteAt = s.DeleteAt,
+                                    DeleteBy = s.DeleteBy,
+                                    IsActived = s.IsActived
+                                })
+                                .ToList();
         return Result<IEnumerable<GetAllMacropadDeviceQueryResponse>>.Succeed(macropads);
     }
 }

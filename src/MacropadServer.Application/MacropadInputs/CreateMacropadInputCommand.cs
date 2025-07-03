@@ -32,7 +32,8 @@ internal sealed class CreateMacropadInputCommandHandler(
             .Include(i => i.MacropadInputs)
             .Include(i => i.MacropadModel)
             .FirstOrDefault();
-        if (macropadDevice is null) return Result<string>.Failure("Macropad bulunamadı");
+        if (macropadDevice is null) 
+            return Result<string>.Failure("Macropad bulunamadı");
         if (macropadDevice.MacropadInputs!.Count() >= macropadDevice.MacropadModel!.ButtonCount * macropadDevice.MacropadModel.ModCount)
             return Result<string>.Failure("Macropad giriş sayısı sınırına ulaşıldı");
         if (macropadDevice.MacropadInputs!.Count(x => x.ModIndex == request.ModIndex) >= macropadDevice.MacropadModel!.ButtonCount)

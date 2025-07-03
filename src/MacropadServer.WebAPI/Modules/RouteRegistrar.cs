@@ -7,5 +7,6 @@ public static class RouteRegistrar
         app.RegisterAuthRoutes();
         app.RegisterMacropadModelRoutes();
         app.RegisterMacropadDeviceRoutes();
+        app.RegisterMacropadInputRoutes();
     }
 }

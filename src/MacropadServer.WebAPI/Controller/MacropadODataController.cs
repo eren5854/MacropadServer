@@ -55,4 +55,12 @@ public class MacropadODataController(
         var response = await sender.Send(new GetAllMacropadDeviceByAppUserIdQuery(appUserId), cancellationToken);
         return response;
     }
+
+    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("macropad-device")]
+    public async Task<Result<GetMacropadDeviceQueryResponse>> GetMacropadDevice(string idOrST, CancellationToken cancellationToken)
+    {
+        var response = await sender.Send(new GetMacropadDeviceQuery(idOrST), cancellationToken);
+        return response;
+    }
 }

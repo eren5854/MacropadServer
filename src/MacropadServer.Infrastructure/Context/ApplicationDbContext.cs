@@ -63,10 +63,10 @@ internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, Identity
                 }
             }
 
-            if (entry.State == EntityState.Deleted)
-            {
-                throw new ArgumentException("Db'den silme işlemi yapamazsınız!");
-            }
+            //if (entry.State == EntityState.Deleted)
+            //{
+            //    throw new ArgumentException("Db'den silme işlemi yapamazsınız!");
+            //}
 
             //switch (entry.State)
             //{
