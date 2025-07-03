@@ -22,4 +22,8 @@
     <ProjectReference Include="..\MacropadServer.ServiceDefaults\MacropadServer.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\MacropadModelImages\" />
+  </ItemGroup>
+
 </Project>

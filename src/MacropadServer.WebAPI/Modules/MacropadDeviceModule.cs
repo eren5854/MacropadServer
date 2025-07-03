@@ -8,7 +8,10 @@ public static class MacropadDeviceModule
 {
     public static void RegisterMacropadDeviceRoutes(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder group = app.MapGroup("macropad-devices").WithTags("Macropad Devices");
+        RouteGroupBuilder group = app.MapGroup("macropad-devices")
+            .WithTags("Macropad Devices")
+            //.RequireAuthorization()
+            ;
         group.MapPost("create",
             async (ISender sender, CreateMacropadDeviceCommand request, CancellationToken cancellationToken) =>
             {

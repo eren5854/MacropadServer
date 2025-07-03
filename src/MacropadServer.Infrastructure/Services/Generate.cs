@@ -9,10 +9,10 @@ internal sealed class Generate(
     IMacropadInputRepository macropadInputRepository,
     IUnitOfWork unitOfWork) : IGenerate
 {
-    public void GenerateMacropadInput(MacropadDevice macropadDevice)
+    public void GenerateMacropadInput(MacropadDevice macropadDevice, MacropadModel macropadModel)
     {
-        int buttonCount = macropadDevice.MacropadModel!.ButtonCount;
-        int modCount = macropadDevice.MacropadModel.ModCount;
+        int buttonCount = macropadModel.ButtonCount;
+        int modCount = macropadModel.ModCount;
 
         for (int i = 1; i <= modCount * buttonCount; i++)
         {

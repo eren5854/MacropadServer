@@ -2,7 +2,6 @@
 using MacropadServer.Application.MacropadDevices;
 using MacropadServer.Application.MacropadModels;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -41,10 +40,19 @@ public class MacropadODataController(
         return response;
     }
 
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("macropad-devices")]
-    public async Task<Result<IQueryable<GetAllMacropadDeviceQueryResponse>>> GetAllMacropadDevice(CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<GetAllMacropadDeviceQueryResponse>>> GetAllMacropadDevice(CancellationToken cancellationToken)
     {
         var response = await sender.Send(new GetAllMacropadDeviceQuery(), cancellationToken);
+        return response;
+    }
+
+    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("macropad-devices-user-id")]
+    public async Task<Result<IEnumerable<GetAllMacropadDeviceByAppUserIdQueryResponse>>> GetAllMacropadDeviceByAppUserId(Guid appUserId, CancellationToken cancellationToken)
+    {
+        var response = await sender.Send(new GetAllMacropadDeviceByAppUserIdQuery(appUserId), cancellationToken);
         return response;
     }
 }

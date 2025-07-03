@@ -11,7 +11,7 @@ namespace MacropadServer.Application.MacropadDevices;
 public sealed record CreateMacropadDeviceCommand(
     string MacropadName,
     bool? IsEyeAnimationEnabled,
-    Guid MacropadModelId,
+    string ModelSerialNo,
     Guid AppUserId) : IRequest<Result<string>>;
 
 internal sealed class CreateMacropadDeviceCommandHandler(
@@ -23,16 +23,17 @@ internal sealed class CreateMacropadDeviceCommandHandler(
 {
     public async Task<Result<string>> Handle(CreateMacropadDeviceCommand request, CancellationToken cancellationToken)
     {
-        bool IsMacropadModelExist = await macropadModelRepository.AnyAsync(
-            x => x.Id == request.MacropadModelId, cancellationToken);
-        if (!IsMacropadModelExist) return Result<string>.Failure("Macropad modeli bulunamadı");
+        MacropadModel macropadModel = macropadModelRepository.GetByExpression(
+            g => g.ModelSerialNo == request.ModelSerialNo);
+        if (macropadModel is null) return Result<string>.Failure("Macropad modeli bulunamadı");
         bool IsAppUserExist = await appUserRepository.AnyAsync(
             x => x.Id == request.AppUserId, cancellationToken);
         if (!IsAppUserExist) return Result<string>.Failure("Kullanıcı bulunamadı");
         MacropadDevice macropad = request.Adapt<MacropadDevice>();
+        macropad.MacropadModelId = macropadModel.Id;
         macropad.MacropadSecretToken = await generate.GenerateSecretToken();
         macropadRepository.Add(macropad);
-        generate.GenerateMacropadInput(macropad);
+        generate.GenerateMacropadInput(macropad, macropadModel);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result<string>.Succeed("Macropad kaydı başarılı");
     }
@@ -45,8 +46,8 @@ public sealed class CreateMacropadDeviceCommandValidator : AbstractValidator<Cre
         RuleFor(r => r.MacropadName)
             .NotEmpty().WithMessage("Macropad adı boş olamaz.")
             .MaximumLength(100).WithMessage("Macropad adı en fazla 100 karakter olabilir.");
-        RuleFor(r => r.MacropadModelId)
-            .NotEmpty().WithMessage("Macropad modeli boş olamaz.");
+        RuleFor(r => r.ModelSerialNo)
+            .NotEmpty().WithMessage("Model boş olamaz.");
         RuleFor(r => r.AppUserId)
             .NotEmpty().WithMessage("Kullanıcı boş olamaz.");
     }

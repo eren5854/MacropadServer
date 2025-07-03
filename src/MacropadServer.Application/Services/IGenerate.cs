@@ -5,5 +5,5 @@ public interface IGenerate
 {
     Task<string> GenerateSerialNumber(MacropadModel macropadModel);
     Task<string> GenerateSecretToken();
-    public void GenerateMacropadInput(MacropadDevice macropad);
+    public void GenerateMacropadInput(MacropadDevice macropad, MacropadModel macropadModel);
 }

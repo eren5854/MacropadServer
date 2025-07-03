@@ -1,18 +1,21 @@
 ﻿using ED.Result;
-using MacropadServer.Domain.Abstractions;
 using MacropadServer.Domain.Enums;
 using MacropadServer.Domain.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MacropadServer.Application.MacropadModels;
 public sealed record GetMacropadModelByIdQuery(Guid Id) : IRequest<Result<GetMacropadModelByIdQueryResponse>>;
 
-public sealed class GetMacropadModelByIdQueryResponse : EntityDto
+public sealed class GetMacropadModelByIdQueryResponse
 {
-    public string ModelName { get; set; } = string.Empty;
+    [Key]
     public string ModelSerialNo { get; set; } = string.Empty;
+    public string ModelName { get; set; } = string.Empty;
     public string? ModelVersion { get; set; }
     public string? ModelDescription { get; set; }
+    public string? ModelImage { get; set; }
     public string? DeviceSupport { get; set; }
     public int ButtonCount { get; set; } = 0;
     public int ModCount { get; set; } = 0;
@@ -33,15 +36,15 @@ internal sealed class GetMacropadModelByIdQueryHandler(
 {
     public async Task<Result<GetMacropadModelByIdQueryResponse>> Handle(GetMacropadModelByIdQuery request, CancellationToken cancellationToken)
     {
-        var macropadModel = macropadModelRepository
+        var macropadModel = await macropadModelRepository
             .Where(w => w.Id == request.Id)
             .Select(model => new GetMacropadModelByIdQueryResponse
             {
-                Id = model.Id,
                 ModelName = model.ModelName,
                 ModelSerialNo = model.ModelSerialNo,
                 ModelVersion = model.ModelVersion,
                 ModelDescription = model.ModelDescription,
+                ModelImage = model.ModelImage,
                 DeviceSupport = model.DeviceSupport,
                 ButtonCount = model.ButtonCount,
                 ModCount = model.ModCount,
@@ -54,12 +57,9 @@ internal sealed class GetMacropadModelByIdQueryHandler(
                 Rechargeable = model.Rechargeable,
                 CaseColor = model.CaseColor,
                 CaseMaterial = model.CaseMaterial,
-                CaseDescription = model.CaseDescription,
-                CreatedAt = model.CreatedAt,
-                UpdatedAt = model.UpdatedAt,
-                IsActived = model.IsActived
+                CaseDescription = model.CaseDescription
             })
-            .FirstOrDefault();
+            .FirstOrDefaultAsync(cancellationToken);
         if (macropadModel is null) return Result<GetMacropadModelByIdQueryResponse>.Failure("Makropad model bulunamadı");
         return Result<GetMacropadModelByIdQueryResponse>.Succeed(macropadModel);
     }

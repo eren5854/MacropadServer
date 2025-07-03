@@ -33,6 +33,7 @@ builder.Services.AddRateLimiter(x => x.AddFixedWindowLimiter("fixed", cfg =>
 }));
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 var app = builder.Build();
+app.UseStaticFiles();
 ExtensionMiddleware.CreateFirstUser(app);
 ExtensionMiddleware.CreateAdmin(app);
 app.MapOpenApi();

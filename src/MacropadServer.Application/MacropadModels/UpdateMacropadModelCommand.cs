@@ -1,32 +1,37 @@
 ﻿using ED.GenericRepository;
 using ED.Result;
 using FluentValidation;
+using GenericFileService.Files;
 using MacropadServer.Domain.Entities;
 using MacropadServer.Domain.Enums;
 using MacropadServer.Domain.Repositories;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace MacropadServer.Application.MacropadModels;
-public sealed record UpdateMacropadModelCommand(
-    Guid Id,
-    string ModelName,
-    string? ModelVersion,
-    string? ModelDescription,
-    string? DeviceSupport,
-    int ButtonCount,
-    int ModCount,
-    bool IsScreenExist,
-    string? ScreenType,
-    double? ScreenSize,
-    MacropadConnectionTypeEnum? ConnectionType,
-    string? MicrocontrollerType,
-    PowerTypeEnum? PowerType,
-    bool? Rechargeable,
-    string? CaseColor,
-    string? CaseMaterial,
-    string? CaseDescription
-) : IRequest<Result<string>>;
+public sealed class UpdateMacropadModelCommand : IRequest<Result<string>>
+{
+    public Guid Id { get; set; }
+    public string ModelName { get; set; } = string.Empty;
+    public string? ModelVersion { get; set; }
+    public string? ModelDescription { get; set; }
+    public IFormFile? ModelImage { get; set; }
+    public string? DeviceSupport { get; set; }
+    public int ButtonCount { get; set; }
+    public int ModCount { get; set; }
+    public bool IsScreenExist { get; set; }
+    public string? ScreenType { get; set; }
+    public double? ScreenSize { get; set; }
+    public MacropadConnectionTypeEnum? ConnectionType { get; set; }
+    public string? MicrocontrollerType { get; set; }
+    public PowerTypeEnum? PowerType { get; set; }
+    public bool? Rechargeable { get; set; }
+    public string? CaseColor { get; set; }
+    public string? CaseMaterial { get; set; }
+    public string? CaseDescription { get; set; }
+}
+    
 
 internal sealed class UpdateMacropadModelCommandHadnler(
     IMacropadModelRepository macropadModelRepository,
@@ -35,13 +40,18 @@ internal sealed class UpdateMacropadModelCommandHadnler(
     public async Task<Result<string>> Handle(UpdateMacropadModelCommand request, CancellationToken cancellationToken)
     {
         MacropadModel macropadModel = macropadModelRepository.GetByExpression(g => g.Id == request.Id);
-        if(macropadModel is null)
-            return Result<string>.Failure("Macropad modeli bulunamadı.");
+        if(macropadModel is null) return Result<string>.Failure("Macropad modeli bulunamadı.");
         bool isModelNameExists = macropadModelRepository.Any(a => a.ModelName == request.ModelName && a.Id != request.Id);
-        if (isModelNameExists)
-            return Result<string>.Failure("Model ismi zaten mevcut");
+        if (isModelNameExists) return Result<string>.Failure("Model ismi zaten mevcut");
+        string? image = null;
+        if (request.ModelImage is not null)
+        {
+            image = FileService.FileSaveToServer(request.ModelImage, "wwwroot/MacropadModelImages/");
+            FileService.FileDeleteToServer($"wwwroot/MacropadModelImages/{macropadModel.ModelImage}");
+        }
+        else image = macropadModel.ModelImage;
         macropadModel = request.Adapt(macropadModel);
-        macropadModel.UpdatedAt = DateTimeOffset.UtcNow;
+        macropadModel.ModelImage = image;
         macropadModelRepository.Update(macropadModel);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result<string>.Succeed("Macropad modeli başarıyla güncellendi.");

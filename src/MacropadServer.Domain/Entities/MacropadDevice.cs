@@ -18,6 +18,6 @@ public sealed class MacropadDevice : Entity
     [JsonIgnore]
     public AppUser AppUser { get; set; } = default!;
 
-    public IEnumerable<MacropadInput>? MacropadInputs { get; set; }
-    public IEnumerable<MacropadEyeAnimation>? MacropadEyeAnimations { get; set; }
+    public List<MacropadInput>? MacropadInputs { get; set; }
+    public List<MacropadEyeAnimation>? MacropadEyeAnimations { get; set; }
 }

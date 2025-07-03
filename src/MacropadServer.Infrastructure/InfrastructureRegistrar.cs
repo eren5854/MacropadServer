@@ -51,6 +51,8 @@ public static class InfrastructureRegistrar
         }).AddJwtBearer();
         //services.AddAuthorizationBuilder();
 
+        services.AddHttpContextAccessor();
+
         //services.AddScoped<JwtProvider>();
 
         //services.AddChatClient(new OllamaChatClient(new Uri("http://192.168.68.154:14001"), "llama3.2:1b"));

@@ -8,6 +8,7 @@ public sealed class MacropadModel : Entity
     public string ModelSerialNo { get; set; } = string.Empty;
     public string? ModelVersion { get; set; }
     public string? ModelDescription { get; set; }
+    public string? ModelImage { get; set; }
     public string? DeviceSupport { get; set; }
     public int ButtonCount { get; set; } = 0;
     public int ModCount { get; set; } = 0;

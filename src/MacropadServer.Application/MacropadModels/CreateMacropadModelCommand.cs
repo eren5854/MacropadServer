@@ -1,32 +1,36 @@
 ﻿using ED.GenericRepository;
 using ED.Result;
 using FluentValidation;
+using GenericFileService.Files;
 using MacropadServer.Application.Services;
 using MacropadServer.Domain.Entities;
 using MacropadServer.Domain.Enums;
 using MacropadServer.Domain.Repositories;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace MacropadServer.Application.MacropadModels;
-public sealed record CreateMacropadModelCommand(
-    string ModelName,
-    string? ModelVersion,
-    string? ModelDescription,
-    string? DeviceSupport,
-    int ButtonCount,
-    int ModCount,
-    bool IsScreenExist,
-    string? ScreenType,
-    double? ScreenSize,
-    MacropadConnectionTypeEnum? ConnectionType,
-    string? MicrocontrollerType,
-    PowerTypeEnum? PowerType,
-    bool? Rechargeable,
-    string? CaseColor,
-    string? CaseMaterial,
-    string? CaseDescription
-) : IRequest<Result<string>>;
+public sealed class CreateMacropadModelCommand : IRequest<Result<string>>
+{
+    public string ModelName { get; set; } = string.Empty;
+    public string? ModelVersion { get; set; }
+    public string? ModelDescription { get; set; }
+    public IFormFile? ModelImage { get; set; }
+    public string? DeviceSupport { get; set; }
+    public int ButtonCount { get; set; }
+    public int ModCount { get; set; }
+    public bool IsScreenExist { get; set; }
+    public string? ScreenType { get; set; }
+    public double? ScreenSize { get; set; }
+    public MacropadConnectionTypeEnum? ConnectionType { get; set; }
+    public string? MicrocontrollerType { get; set; }
+    public PowerTypeEnum? PowerType { get; set; }
+    public bool? Rechargeable { get; set; }
+    public string? CaseColor { get; set; }
+    public string? CaseMaterial { get; set; }
+    public string? CaseDescription { get; set; }
+}
 
 internal sealed class CreateMacropadModelCommandHandler(
     IMacropadModelRepository macropadModelRepository,
@@ -37,9 +41,10 @@ internal sealed class CreateMacropadModelCommandHandler(
     {
         bool isModelNameExists = macropadModelRepository.Any(a => a.ModelName == request.ModelName);
         if (isModelNameExists) return Result<string>.Failure("Model ismi zaten mevcut");
+        string? image = null;
+        if(request.ModelImage is not null) image = FileService.FileSaveToServer(request.ModelImage, "wwwroot/MacropadModelImages/");
         MacropadModel macropadModel = request.Adapt<MacropadModel>();
-        macropadModel.CreatedAt = DateTimeOffset.UtcNow;
-        macropadModel.CreatedBy = "Admin";
+        macropadModel.ModelImage = image;
         macropadModel.ModelSerialNo = await generate.GenerateSerialNumber(macropadModel);
         macropadModelRepository.Add(macropadModel);
         await unitOfWork.SaveChangesAsync(cancellationToken);

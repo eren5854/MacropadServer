@@ -18,9 +18,9 @@ internal sealed class JwtProvider(
     {
         List<Claim> claims = new()
         {
+            new Claim("UserName", user.UserName ?? ""),
             new Claim("Id", user.Id.ToString()),
             new Claim("Email",  user.Email ?? ""),
-            new Claim("UserName", user.UserName ?? ""),
             new Claim(ClaimTypes.Role, user.Role.ToString())
             //new Claim(ClaimTypes.NameIdentifier, user.Email ?? ""),
         };

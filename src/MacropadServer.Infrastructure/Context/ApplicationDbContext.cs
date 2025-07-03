@@ -1,6 +1,7 @@
 ﻿using ED.GenericRepository;
 using MacropadServer.Domain.Abstractions;
 using MacropadServer.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 namespace MacropadServer.Infrastructure.Context;
 internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>, IUnitOfWork
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
     {
+        _httpContextAccessor = httpContextAccessor;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -30,36 +33,51 @@ internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, Identity
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker.Entries<Entity>();
+        //HttpContextAccessor httpContextAccessor = new();
+        string? userName = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(p => p.Type == "UserName")?.Value;
         foreach (var entry in entries)
         {
-            switch (entry.State)
+            if(entry.State == EntityState.Added)
             {
-                case EntityState.Added:
-                    entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
-                    break;
-                case EntityState.Modified:
-                    entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
-                    break;
+                entry.Property(p => p.CreatedAt)
+                    .CurrentValue = DateTimeOffset.UtcNow;
+                entry.Property(p => p.CreatedBy)
+                    .CurrentValue = userName!;
             }
 
-            //if(entry.State == EntityState.Modified)
+            if (entry.State == EntityState.Modified)
+            {
+                if (entry.Property(p => p.IsDeleted).CurrentValue == true)
+                {
+                    entry.Property(p => p.DeleteAt)
+                        .CurrentValue = DateTimeOffset.UtcNow;
+                    entry.Property(p => p.DeleteBy)
+                    .CurrentValue = userName;
+                }
+                else
+                {
+                    entry.Property(p => p.UpdatedAt)
+                        .CurrentValue = DateTimeOffset.UtcNow;
+                    entry.Property(p => p.UpdatedBy)
+                    .CurrentValue = userName;
+                }
+            }
+
+            if (entry.State == EntityState.Deleted)
+            {
+                throw new ArgumentException("Db'den silme işlemi yapamazsınız!");
+            }
+
+            //switch (entry.State)
             //{
-            //    if (entry.Property(p => p.IsDeleted).CurrentValue = true)
-            //    {
-            //        entry.Property(p => p.DeleteAt)
-            //            .CurrentValue = DateTimeOffset.UtcNow;
-            //    }
-            //    else
-            //    {
-            //        entry.Property(p => p.UpdatedAt)
-            //            .CurrentValue = DateTimeOffset.UtcNow;
-            //    }
+            //    case EntityState.Added:
+            //        entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
+            //        break;
+            //    case EntityState.Modified:
+            //        entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
+            //        break;
             //}
 
-            //if(entry.State == EntityState.Deleted)
-            //{
-            //    throw new ArgumentException("Db'den silme işlemi yapamazsınız!");
-            //}
         }
         return base.SaveChangesAsync(cancellationToken);
     }

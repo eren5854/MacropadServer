@@ -1,6 +1,7 @@
 ﻿using ED.Result;
 using MacropadServer.Application.MacropadModels;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MacropadServer.WebAPI.Modules;
 
@@ -11,16 +12,17 @@ public static class MacropadModelModule
         RouteGroupBuilder group = app.MapGroup("macropad-models").WithTags("Macropad Models").RequireAuthorization();
 
         group.MapPost("create",
-            async (ISender sender, CreateMacropadModelCommand request, CancellationToken cancellationToken) =>
+            async (ISender sender, [FromForm]CreateMacropadModelCommand request, CancellationToken cancellationToken) =>
             {
                 var response = await sender.Send(request, cancellationToken);
                 return response.IsSuccessful ? Results.Ok(response) : Results.InternalServerError(response);
             })
             .Produces<Result<string>>()
-            .WithName("CreateMacropadModel");
+            .WithName("CreateMacropadModel")
+            .DisableAntiforgery();
 
         group.MapPost("update",
-            async(ISender sender, UpdateMacropadModelCommand request, CancellationToken cancellationToken) =>
+            async(ISender sender, [FromForm]UpdateMacropadModelCommand request, CancellationToken cancellationToken) =>
             {
                 var response = await sender.Send(request, cancellationToken);
                 return response.IsSuccessful ? Results.Ok(response) : Results.InternalServerError(response);
